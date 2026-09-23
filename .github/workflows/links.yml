@@ -1,0 +1,21 @@
+name: links
+
+on:
+  schedule:
+    - cron: "30 3 * * 1" # Mondays 03:30 UTC (09:00 IST)
+  workflow_dispatch:
+  push:
+    paths:
+      - "data/**"
+      - "scripts/check_links.py"
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check resource links
+        run: python3 scripts/check_links.py
