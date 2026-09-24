@@ -23,6 +23,7 @@ RM.addTopics({
 
   "web-fundamentals": {
     title: "Web fundamentals: HTML, CSS, JavaScript",
+    hi: ["Chai aur Code: JavaScript", "https://www.youtube.com/results?search_query=chai+aur+code+javascript+series", "HTML aur CSS ke basics ke baad JavaScript series"],
     subs: [
       "Semantic HTML and accessibility basics",
       "The CSS box model, flexbox, grid and responsive layouts",
@@ -41,6 +42,7 @@ RM.addTopics({
 
   "typescript": {
     title: "TypeScript",
+    hi: ["Chai aur Code: TypeScript", "https://www.youtube.com/results?search_query=chai+aur+code+typescript", "Chhoti series; phir TypeScript Handbook"],
     subs: [
       "Basic and structural types; interfaces vs type aliases",
       "Unions, narrowing and discriminated unions",
@@ -57,6 +59,7 @@ RM.addTopics({
 
   "react-frontend": {
     title: "React and modern frontend",
+    hi: ["Chai aur Code: React", "https://www.youtube.com/results?search_query=chai+aur+code+react+series", "Projects ke saath poori series"],
     subs: [
       "Components, props and state",
       "Hooks: useState, useEffect, useMemo, custom hooks",

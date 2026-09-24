@@ -42,7 +42,8 @@ RM.addRoadmap({
     {
       title: "Full-stack development",
       note: "FDE ko end-to-end tool khud banana aana chahiye: frontend, backend, database. Design perfect nahi, kaam ka hona chahiye.",
-      topics: ["web-fundamentals", "typescript", "react-frontend", "apis-backend", "sw-design"],
+      topics: ["web-fundamentals", "typescript", "react-frontend", "apis-backend"],
+      extra: ["sw-design"],
       projects: [{
         id: "fde-internal-tool",
         title: "Internal tool, full stack",
@@ -59,7 +60,8 @@ RM.addRoadmap({
     {
       title: "Data and integration",
       note: "Customer ka data hamesha bikhra hua milega. Integration aur entity resolution FDE ki roz ki zindagi hai.",
-      topics: ["sql-fundamentals", "sql-advanced", "db-fundamentals", "pandas", "data-eng-fundamentals", "enterprise-integration", "domain-modeling"],
+      topics: ["sql-fundamentals", "db-fundamentals", "pandas", "data-eng-fundamentals", "enterprise-integration", "domain-modeling"],
+      extra: ["sql-advanced"],
       projects: [{
         id: "fde-integration-pipeline",
         title: "Integration pipeline",
@@ -76,7 +78,8 @@ RM.addRoadmap({
     {
       title: "Cloud, deployment and infrastructure",
       note: "Har customer ka environment alag hota hai: cloud, VPC, kabhi on-prem. Reproducible deployment hi sukoon deta hai.",
-      topics: ["networking", "docker", "kubernetes", "cloud-fundamentals", "iac", "cicd"],
+      topics: ["docker", "kubernetes", "cloud-fundamentals", "iac", "cicd"],
+      extra: ["networking"],
       projects: [{
         id: "fde-terraform-deploy",
         title: "Deploy it the way a customer would require",
@@ -110,7 +113,8 @@ RM.addRoadmap({
     {
       title: "AI solutions",
       note: "Aaj ke zyadatar FDE roles AI deploy karne ke liye hain. RAG, agents aur evals ko customer ke data pe chalana seekho.",
-      topics: ["llm-fundamentals", "llm-apis", "prompting", "embeddings-vectordb", "rag", "agents", "mcp", "llm-evals", "ai-security", "ai-product"],
+      topics: ["llm-fundamentals", "llm-apis", "prompting", "embeddings-vectordb", "rag", "agents", "llm-evals", "ai-security", "ai-product"],
+      extra: ["mcp"],
       projects: [{
         id: "fde-ai-assistant",
         title: "AI assistant on customer data",

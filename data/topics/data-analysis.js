@@ -2,6 +2,7 @@
 RM.addTopics({
   "numpy": {
     title: "NumPy",
+    hi: ["CodeWithHarry: NumPy", "https://www.youtube.com/results?search_query=codewithharry+numpy+tutorial+hindi", "Ek baar dekh ke numpy-100 exercises karo"],
     subs: [
       "ndarrays, dtypes and memory layout",
       "Indexing, slicing, boolean masks, fancy indexing",
@@ -20,6 +21,7 @@ RM.addTopics({
 
   "pandas": {
     title: "pandas and data wrangling",
+    hi: ["CodeWithHarry: Pandas", "https://www.youtube.com/results?search_query=codewithharry+pandas+tutorial+hindi", "Video ke baad Kaggle ke Pandas exercises zaroor karo"],
     subs: [
       "Series and DataFrames; reading CSV, Excel, Parquet and SQL",
       "Selecting with loc and iloc, filtering, sorting",
@@ -42,6 +44,7 @@ RM.addTopics({
 
   "data-collection": {
     title: "Collecting data: APIs, files and scraping",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "Day 15 se 18: CSV, JSON, SQL, API aur web scraping"],
     subs: [
       "Calling REST APIs with requests: auth, pagination, rate limits",
       "Flattening JSON and nested data into tables",
@@ -59,6 +62,7 @@ RM.addTopics({
 
   "sql-fundamentals": {
     title: "SQL fundamentals",
+    hi: ["Apna College: SQL one shot", "https://www.youtube.com/results?search_query=apna+college+sql+one+shot", "Joins aur GROUP BY tak pakka karo, phir roz practice"],
     subs: [
       "SELECT, WHERE, ORDER BY, LIMIT",
       "Aggregates with GROUP BY and HAVING",
@@ -99,6 +103,7 @@ RM.addTopics({
 
   "eda": {
     title: "Exploratory data analysis",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "Day 19 se 22: understanding data, univariate, bivariate analysis, pandas profiling"],
     subs: [
       "Profiling a new dataset: shape, types, ranges, cardinality",
       "Univariate distributions and outlier detection",

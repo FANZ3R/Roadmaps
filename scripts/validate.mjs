@@ -77,6 +77,11 @@ for (const [id, t] of Object.entries(RM.topics)) {
     if (kind && !KINDS.has(kind)) errors.push(`${where}: unknown resource kind "${kind}".`);
   }
   if (t.tip !== undefined && !isText(t.tip)) errors.push(`${where}: tip should be a non-empty string.`);
+  if (t.hi !== undefined) {
+    if (!Array.isArray(t.hi) || !isText(t.hi[0]) || !/^https:\/\/[^\s]+$/.test(t.hi[1] || "")) {
+      errors.push(`${where}: hi must be ["label", "https://...", "optional note"].`);
+    }
+  }
 }
 
 const lineIds = new Set();
@@ -97,16 +102,20 @@ for (const r of RM.roadmaps) {
   const inLine = new Set();
   let items = 0;
   let projects = 0;
+  let extraTopics = 0;
+  let extraItems = 0;
   r.phases.forEach((ph, i) => {
     const pw = `${where}, phase ${i + 1}`;
     if (!isText(ph.title)) errors.push(`${pw}: missing title.`);
-    if (!(ph.topics || []).length && !(ph.projects || []).length) errors.push(`${pw}: has no topics or projects.`);
-    for (const tid of ph.topics || []) {
+    if (!(ph.topics || []).length && !(ph.projects || []).length) errors.push(`${pw}: has no core topics or projects.`);
+    const listed = [...(ph.topics || []).map((t) => [t, false]), ...(ph.extra || []).map((t) => [t, true])];
+    for (const [tid, isExtra] of listed) {
       if (!RM.topics[tid]) { errors.push(`${pw}: unknown topic "${tid}".`); continue; }
-      if (inLine.has(tid)) errors.push(`${pw}: topic "${tid}" already appears earlier in this roadmap.`);
+      if (inLine.has(tid)) errors.push(`${pw}: topic "${tid}" is listed more than once in this roadmap.`);
       inLine.add(tid);
       used.add(tid);
-      items += RM.topics[tid].subs.length;
+      if (isExtra) { extraTopics++; extraItems += RM.topics[tid].subs.length; }
+      else items += RM.topics[tid].subs.length;
     }
     for (const p of ph.projects || []) {
       const prw = `${pw}, project "${p.id}"`;
@@ -126,16 +135,20 @@ for (const r of RM.roadmaps) {
       projects++;
     }
   });
-  stats.push(`${r.code.padEnd(4)} ${r.title.padEnd(28)} ${String(r.phases.length).padStart(2)} phases  ${String(inLine.size).padStart(3)} topics  ${String(projects).padStart(2)} projects  ${String(items).padStart(4)} items`);
+  stats.push(`${r.code.padEnd(4)} ${r.title.padEnd(28)} ${String(r.phases.length).padStart(2)} phases  ${String(inLine.size - extraTopics).padStart(3)} core + ${String(extraTopics).padStart(2)} extra topics  ${String(projects).padStart(2)} projects  ${String(items).padStart(4)} core items (+${extraItems} extra)`);
 }
 
 const unused = Object.keys(RM.topics).filter((id) => !used.has(id));
 if (unused.length) notes.push(`Topics not used by any roadmap yet: ${unused.join(", ")}`);
 
 const urls = new Set();
-for (const t of Object.values(RM.topics)) for (const r of t.res || []) urls.add(r[1]);
+let hindi = 0;
+for (const t of Object.values(RM.topics)) {
+  for (const r of t.res || []) urls.add(r[1]);
+  if (t.hi) { urls.add(t.hi[1]); hindi++; }
+}
 
-console.log(`Loaded ${scripts.length} data files: ${Object.keys(RM.topics).length} topics, ${RM.roadmaps.length} roadmaps, ${urls.size} unique links.`);
+console.log(`Loaded ${scripts.length} data files: ${Object.keys(RM.topics).length} topics (${hindi} with a Hindi pick), ${RM.roadmaps.length} roadmaps, ${urls.size} unique links.`);
 for (const line of stats) console.log("  " + line);
 for (const n of notes) console.log("Note: " + n);
 

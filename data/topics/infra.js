@@ -2,6 +2,7 @@
 RM.addTopics({
   "apis-backend": {
     title: "Backend and API development",
+    hi: ["CampusX: FastAPI for Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_RmvZ41tjbKB2ZnwchfniNsMuQ", "Poora playlist ML models ko FastAPI se serve karna sikhata hai"],
     subs: [
       "REST principles: resources, methods, status codes",
       "FastAPI: routing, Pydantic models, dependency injection",
@@ -23,6 +24,7 @@ RM.addTopics({
 
   "system-design": {
     title: "System design fundamentals",
+    hi: ["Concept && Coding: System Design", "https://www.youtube.com/results?search_query=concept+and+coding+system+design+playlist", "Basics aur case studies; saath mein System Design Primer padho"],
     subs: [
       "Latency vs throughput; back-of-envelope estimates",
       "Caching layers and invalidation strategies",
@@ -81,6 +83,7 @@ RM.addTopics({
 
   "spark": {
     title: "Big data processing with Spark",
+    hi: ["Manish Kumar: Apache Spark", "https://www.youtube.com/results?search_query=manish+kumar+spark+playlist+hindi", "Theory playlist se shuru, phir practical"],
     subs: [
       "Architecture: driver, executors, partitions",
       "Lazy evaluation, DAGs, transformations vs actions",
@@ -99,6 +102,7 @@ RM.addTopics({
 
   "streaming": {
     title: "Streaming and change data capture",
+    hi: ["Piyush Garg: Kafka crash course", "https://www.youtube.com/results?search_query=piyush+garg+kafka+crash+course", "Kafka basics ke liye; CDC ke liye Debezium tutorial"],
     subs: [
       "The log as a unifying abstraction",
       "Kafka: topics, partitions, consumer groups, offsets",
@@ -108,8 +112,8 @@ RM.addTopics({
       "Schema evolution and schema registries"
     ],
     res: [
-      ["The Log: what every software engineer should know (Jay Kreps)", "https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying", "article"],
       ["Confluent Developer courses (free)", "https://developer.confluent.io/courses/", "course"],
+      ["The Log: what every software engineer should know (Jay Kreps)", "https://engineering.linkedin.com/distributed-systems/log-what-every-software-engineer-should-know-about-real-time-datas-unifying", "article"],
       ["Debezium tutorial", "https://debezium.io/documentation/reference/stable/tutorial.html", "docs"]
     ],
     tip: "Jay Kreps ka 'The Log' essay streaming ki neev hai, ek baar dhyan se padho. Exactly-once ka matlab aur uski keemat interviews mein poochi jaati hai."
@@ -117,6 +121,7 @@ RM.addTopics({
 
   "docker": {
     title: "Docker and containers",
+    hi: ["TrainWithShubham: Docker in one shot", "https://www.youtube.com/watch?v=9bSbNNH4Nqw", "Do live projects ke saath; saath-saath khud karo"],
     subs: [
       "Images vs containers; layers and build caching",
       "Writing Dockerfiles: slim bases, multi-stage builds",
@@ -134,6 +139,7 @@ RM.addTopics({
 
   "kubernetes": {
     title: "Kubernetes",
+    hi: ["TrainWithShubham: Kubernetes one shot", "https://www.youtube.com/results?search_query=trainwithshubham+kubernetes+one+shot", "Pehle one shot, phir kind ya minikube pe khud deploy karo"],
     subs: [
       "Pods, deployments and replica sets",
       "Services, ingress and DNS",
@@ -171,6 +177,7 @@ RM.addTopics({
 
   "iac": {
     title: "Infrastructure as code",
+    hi: ["TrainWithShubham: Terraform", "https://www.youtube.com/playlist?list=PLlfy9GnSVerQzwhT644uP14iqZa0ZC4pn", "TerraWeek wala poora playlist"],
     subs: [
       "Why IaC: reproducibility, review, drift detection",
       "Terraform: providers, resources, variables, outputs",
@@ -186,6 +193,7 @@ RM.addTopics({
 
   "cicd": {
     title: "CI/CD",
+    hi: ["TrainWithShubham: CI/CD with GitHub Actions", "https://www.youtube.com/results?search_query=trainwithshubham+github+actions+cicd", "Ek pipeline khud banao: lint, test, build, deploy"],
     subs: [
       "Pipeline stages: lint, test, build, deploy",
       "GitHub Actions: workflows, jobs, secrets, caching",
@@ -202,6 +210,7 @@ RM.addTopics({
 
   "mlops-lifecycle": {
     title: "MLOps lifecycle",
+    hi: ["Krish Naik Hindi: End-to-end ML projects", "https://www.youtube.com/playlist?list=PLTDARY42LDV7jzL_f68SY-eOQ9tY2lYvR", "Project structure, pipelines aur deployment dekhne ke liye"],
     subs: [
       "Scoping ML projects and defining success",
       "Experiment tracking and a model registry with MLflow",
@@ -251,8 +260,8 @@ RM.addTopics({
       "Prometheus and Grafana basics"
     ],
     res: [
-      ["Data Distribution Shifts and Monitoring (Chip Huyen)", "https://huyenchip.com/2022/02/07/data-distribution-shifts-and-monitoring.html", "article"],
       ["Open-source ML observability course (Evidently AI)", "https://www.evidentlyai.com/ml-observability-course", "course"],
+      ["Data Distribution Shifts and Monitoring (Chip Huyen)", "https://huyenchip.com/2022/02/07/data-distribution-shifts-and-monitoring.html", "article"],
       ["Prometheus: getting started", "https://prometheus.io/docs/prometheus/latest/getting_started/", "docs"]
     ],
     tip: "Drift alert tabhi useful hai jab pata ho ki alert aane par karna kya hai. Har alert ke saath ek runbook line likho."

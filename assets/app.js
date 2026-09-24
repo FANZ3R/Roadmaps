@@ -112,6 +112,8 @@
     });
   });
 
+  const flat = (arrays) => [].concat.apply([], arrays);
+
   lines.forEach((r) => {
     if (lineById[r.id]) warnings.push('Roadmap id "' + r.id + '" is used twice.');
     lineById[r.id] = r;
@@ -119,20 +121,22 @@
     const usedHere = new Set();
     r.phases.forEach((ph, i) => {
       ph._index = i;
-      ph.topics = (ph.topics || []).filter((tid) => {
+      const keep = (tid) => {
         if (!topics[tid]) {
           warnings.push(r.title + ", phase " + (i + 1) + ': there is no topic with id "' + tid + '".');
           return false;
         }
         if (usedHere.has(tid)) {
-          warnings.push(r.title + ': topic "' + tid + '" appears in more than one phase.');
+          warnings.push(r.title + ': topic "' + tid + '" is listed more than once.');
           return false;
         }
         usedHere.add(tid);
         const on = topicLines[tid] || (topicLines[tid] = []);
         if (on.indexOf(r.id) < 0) on.push(r.id);
         return true;
-      });
+      };
+      ph.topics = (ph.topics || []).filter(keep);
+      ph.extra = (ph.extra || []).filter(keep);
       ph.projects = (ph.projects || []).filter((p) => {
         if (projectById[p.id]) {
           warnings.push('Project id "' + p.id + '" is used twice.');
@@ -142,12 +146,14 @@
         projectItems[p.id] = (p.done || []).map((text) => ({ key: "p:" + p.id + ":" + hash(text), text }));
         return true;
       });
-      const keys = [];
-      ph.topics.forEach((tid) => topicItems[tid].forEach((it) => keys.push(it.key)));
-      ph.projects.forEach((p) => projectItems[p.id].forEach((it) => keys.push(it.key)));
-      ph._keys = keys;
+      // Core path: topics plus projects. Extra topics are optional and never block the next stop.
+      ph._keys = flat(ph.topics.map((tid) => topicItems[tid].map((it) => it.key)))
+        .concat(flat(ph.projects.map((p) => projectItems[p.id].map((it) => it.key))));
+      ph._extraKeys = flat(ph.extra.map((tid) => topicItems[tid].map((it) => it.key)));
     });
-    r._keys = Array.from(new Set([].concat.apply([], r.phases.map((ph) => ph._keys))));
+    r._keys = Array.from(new Set(flat(r.phases.map((ph) => ph._keys))));
+    const core = new Set(r._keys);
+    r._extraKeys = Array.from(new Set(flat(r.phases.map((ph) => ph._extraKeys)))).filter((k) => !core.has(k));
   });
 
   /* ---------- progress state ---------- */
@@ -378,43 +384,85 @@
       esc(text) + "</textarea></div>";
   }
 
-  function topicHTML(tid, r) {
+  function stateOf(p) { return p.total && p.done === p.total ? "done" : p.done > 0 ? "partial" : "todo"; }
+
+  function sourceKind(url, fallback) {
+    if (/youtube\.com\/results\?/.test(url)) return "YouTube search";
+    if (/[?&]list=/.test(url)) return "playlist";
+    if (/youtube\.com\/watch|youtu\.be\//.test(url)) return "video";
+    return fallback || "";
+  }
+
+  // One clear pick per topic: the Hindi source when there is a good one, else the best English course.
+  function learnHTML(t) {
+    const res = t.res || [];
+    const hi = Array.isArray(t.hi) && t.hi[1] ? t.hi : null;
+    const main = hi || res[0];
+    if (!main) return "";
+    const next = hi ? res[0] : res[1];
+    const rest = res.slice(hi ? 1 : 2);
+    const kind = sourceKind(main[1], hi ? "" : main[2]);
+    return '<div class="learn">' +
+      '<a class="learn-main" href="' + esc(main[1]) + '" target="_blank" rel="noopener noreferrer">' +
+        '<span class="learn-lang' + (hi ? "" : " is-en") + '">' + (hi ? "Hindi" : "English") + "</span>" +
+        '<span class="learn-text"><span class="learn-title">' + esc(main[0]) + "</span>" +
+          (hi && hi[2] ? '<span class="learn-note">' + esc(hi[2]) + "</span>" : "") + "</span>" +
+        (kind ? '<span class="learn-kind">' + esc(kind) + "</span>" : "") +
+      "</a>" +
+      (next ? '<p class="learn-next">' + (hi ? "Go deeper in English: " : "Also good: ") + resLink(next) + "</p>" : "") +
+      (rest.length ? '<details class="more"><summary>More resources (' + rest.length + ")</summary>" +
+        '<ul class="res-more">' + rest.map((x) => "<li>" + resLink(x) + "</li>").join("") + "</ul></details>" : "") +
+      "</div>";
+  }
+
+  function rowHTML(id, countKey, p, titleHTML) {
+    return '<summary class="row"><span class="row-mark" aria-hidden="true"></span>' +
+      '<span class="row-title">' + titleHTML + '</span><span class="here-tag">You are here</span>' +
+      '<span class="count" data-count="' + countKey + '">' + p.done + "/" + p.total + "</span></summary>";
+  }
+
+  function topicHTML(tid, r, hereId, isExtra) {
     const t = topics[tid];
     const items = topicItems[tid];
     const p = progress(items.map((i) => i.key));
     const others = (topicLines[tid] || []).filter((id) => id !== r.id).map((id) => lineById[id]);
-    const res = t.res || [];
     const hasNote = !!noteText(tid).trim();
-    const search = (t.title + " " + (t.subs || []).join(" ") + " " + res.map((x) => x[0]).join(" ")).toLowerCase();
-    return '<article class="topic' + (p.done === p.total ? " is-done" : "") + '" id="topic-' + tid + '" data-search="' + esc(search) + '">' +
-      '<header class="block-head"><h3>' + esc(t.title) + '</h3><span class="count" data-count="topic:' + tid + '">' + p.done + "/" + p.total + "</span></header>" +
-      (others.length ? '<p class="interchange">Also on ' + others.map((o) =>
-        '<a class="badge badge-sm" ' + lineAttrs(o) + ' href="#/r/' + o.id + "/" + tid + '" title="' + esc(o.title) + '">' + esc(o.code) + "</a>").join("") + "</p>" : "") +
-      '<ul class="items">' + items.map(itemHTML).join("") + "</ul>" +
-      (res.length ? '<div class="res"><p class="res-first">Start with ' + resLink(res[0]) + "</p>" +
-        (res.length > 1 ? '<ul class="res-more">' + res.slice(1).map((x) => "<li>" + resLink(x) + "</li>").join("") + "</ul>" : "") + "</div>" : "") +
-      (t.tip ? '<p class="tip">' + esc(t.tip) + "</p>" : "") +
-      '<div class="block-actions">' +
-        '<button type="button" class="linkbtn" data-act="known-topic" data-topic="' + tid + '">Mark all as already known</button>' +
-        '<button type="button" class="linkbtn" data-act="notes" aria-expanded="false">' + (hasNote ? "Notes (1)" : "Notes") + "</button>" +
-      "</div>" +
-      notesHTML(tid, "Your notes, repo links, what clicked") +
-      "</article>";
+    const here = tid === hereId;
+    const search = (t.title + " " + (t.subs || []).join(" ") + " " + (t.hi ? t.hi[0] : "") + " " +
+      (t.res || []).map((x) => x[0]).join(" ")).toLowerCase();
+    return '<details class="topic' + (isExtra ? " is-extra" : "") + (p.done === p.total ? " is-done" : "") + (here ? " is-here" : "") +
+      '" id="topic-' + tid + '" data-state="' + stateOf(p) + '" data-search="' + esc(search) + '"' + (here ? " open" : "") + ">" +
+      rowHTML(tid, "topic:" + tid, p, esc(t.title)) +
+      '<div class="block-body">' +
+        learnHTML(t) +
+        '<ul class="items">' + items.map(itemHTML).join("") + "</ul>" +
+        (t.tip ? '<p class="tip">' + esc(t.tip) + "</p>" : "") +
+        '<div class="block-actions">' +
+          (others.length ? '<span class="interchange">Also on ' + others.map((o) =>
+            '<a class="badge badge-sm" ' + lineAttrs(o) + ' href="#/r/' + o.id + "/" + tid + '" title="' + esc(o.title) + '">' + esc(o.code) + "</a>").join("") + "</span>" : "") +
+          '<button type="button" class="linkbtn" data-act="known-topic" data-topic="' + tid + '">Mark all as already known</button>' +
+          '<button type="button" class="linkbtn" data-act="notes" aria-expanded="false">' + (hasNote ? "Notes (1)" : "Notes") + "</button>" +
+        "</div>" +
+        notesHTML(tid, "Your notes, repo links, what clicked") +
+      "</div></details>";
   }
 
-  function projectHTML(pr) {
+  function projectHTML(pr, hereId) {
     const items = projectItems[pr.id];
     const p = progress(items.map((i) => i.key));
     const hasNote = !!noteText(pr.id).trim();
+    const here = pr.id === hereId;
     const search = (pr.title + " " + (pr.brief || "") + " " + (pr.done || []).join(" ") + " project").toLowerCase();
-    return '<article class="project' + (p.done === p.total ? " is-done" : "") + '" id="project-' + esc(pr.id) + '" data-search="' + esc(search) + '">' +
-      '<header class="block-head"><h3><span class="tag">Project</span>' + esc(pr.title) + '</h3><span class="count" data-count="project:' + esc(pr.id) + '">' + p.done + "/" + p.total + "</span></header>" +
-      (pr.brief ? '<p class="brief">' + esc(pr.brief) + "</p>" : "") +
-      '<p class="done-when">Done when</p>' +
-      '<ul class="items">' + items.map(itemHTML).join("") + "</ul>" +
-      '<div class="block-actions"><button type="button" class="linkbtn" data-act="notes" aria-expanded="false">' + (hasNote ? "Notes (1)" : "Notes") + "</button></div>" +
-      notesHTML(pr.id, "Repo link, demo link, write-up link") +
-      "</article>";
+    return '<details class="project' + (p.done === p.total ? " is-done" : "") + (here ? " is-here" : "") + '" id="project-' + esc(pr.id) +
+      '" data-state="' + stateOf(p) + '" data-search="' + esc(search) + '"' + (here ? " open" : "") + ">" +
+      rowHTML(pr.id, "project:" + esc(pr.id), p, '<span class="tag">Project</span>' + esc(pr.title)) +
+      '<div class="block-body">' +
+        (pr.brief ? '<p class="brief">' + esc(pr.brief) + "</p>" : "") +
+        '<p class="done-when">Done when</p>' +
+        '<ul class="items">' + items.map(itemHTML).join("") + "</ul>" +
+        '<div class="block-actions"><button type="button" class="linkbtn" data-act="notes" aria-expanded="false">' + (hasNote ? "Notes (1)" : "Notes") + "</button></div>" +
+        notesHTML(pr.id, "Repo link, demo link, write-up link") +
+      "</div></details>";
   }
 
   function calibBannerHTML() {
@@ -453,13 +501,20 @@
         '<div class="ns-foot">' + picker + "</div></section>";
     }
     const title = nu.kind === "topic" ? topics[nu.id].title : nu.project.title;
-    const first = nu.kind === "topic" ? (topics[nu.id].res || [])[0] : null;
+    const t = nu.kind === "topic" ? topics[nu.id] : null;
+    const hi = t && Array.isArray(t.hi) && t.hi[1] ? t.hi : null;
+    const first = t ? (t.res || [])[0] : null;
+    const learn = hi
+      ? '<p class="ns-res"><span class="learn-lang">Hindi</span> ' + resLink([hi[0], hi[1], sourceKind(hi[1])]) +
+        (hi[2] ? '<span class="ns-note">' + esc(hi[2]) + "</span>" : "") + "</p>"
+      : first ? '<p class="ns-res">Start with ' + resLink(first) + "</p>"
+      : '<p class="ns-res">' + esc((nu.project && nu.project.brief) || "") + "</p>";
     return '<section class="nextstop" aria-labelledby="ns-title">' +
       '<p class="ns-context"><span class="badge">' + esc(r.code) + "</span><span>Next stop on the " + esc(r.title) +
         " line. Phase " + (nu.phase._index + 1) + " of " + r.phases.length + ": " + esc(nu.phase.title) + "</span></p>" +
       '<h1 class="ns-title" id="ns-title">' + (nu.kind === "project" ? '<span class="tag tag-lg">Project</span>' : "") + esc(title) + "</h1>" +
       '<ul class="items ns-items">' + nu.items.map(itemHTML).join("") + "</ul>" +
-      (first ? '<p class="ns-res">Start with ' + resLink(first) + "</p>" : '<p class="ns-res">' + esc(nu.project.brief || "") + "</p>") +
+      learn +
       '<div class="ns-foot"><a class="btn btn-solid" href="#/r/' + r.id + "/" + esc(nu.id) + '">Open this stop</a>' + picker + "</div>" +
       "</section>";
   }
@@ -600,22 +655,30 @@
 
   function openList(r) { return Array.isArray(ui.open[r.id]) ? ui.open[r.id] : defaultOpen(r); }
 
-  function phaseHTML(r, ph, i, openSet) {
+  function phaseHTML(r, ph, i, openSet, hereId) {
     const p = progress(ph._keys);
+    const x = progress(ph._extraKeys);
     return '<li class="station" data-state="' + phaseState(p) + '">' +
       "<details" + (openSet.has(i) ? " open" : "") + ' data-line-id="' + r.id + '" data-idx="' + i + '">' +
       '<summary><span class="stop" aria-hidden="true"></span><span class="st-num">Phase ' + (i + 1) + "</span>" +
         '<span class="st-title">' + esc(ph.title) + '</span><span class="st-count" data-count="phase:' + r.id + ":" + i + '">' + p.done + " of " + p.total + "</span></summary>" +
       '<div class="st-body">' + (ph.note ? '<p class="st-note">' + esc(ph.note) + "</p>" : "") +
-        ph.topics.map((tid) => topicHTML(tid, r)).join("") +
-        ph.projects.map(projectHTML).join("") +
+        ph.topics.map((tid) => topicHTML(tid, r, hereId, false)).join("") +
+        ph.projects.map((pr) => projectHTML(pr, hereId)).join("") +
+        (ph.extra.length ? '<div class="extras"><p class="extras-label">Extra, when you have time ' +
+          '<span class="extras-count" data-count="xphase:' + r.id + ":" + i + '">' + x.done + " of " + x.total + "</span></p>" +
+          ph.extra.map((tid) => topicHTML(tid, r, hereId, true)).join("") + "</div>" : "") +
       "</div></details></li>";
   }
 
   function lineHTML(r) {
     const p = progress(r._keys);
+    const x = progress(r._extraKeys);
     const isFocus = focusLine().id === r.id;
+    const nu = nextUp(r);
+    const hereId = nu ? nu.id : "";
     const openSet = new Set(openList(r));
+    if (nu) openSet.add(nu.phase._index);
     return '<div class="line-view' + (ui.hideDone ? " hide-done" : "") + '" ' + lineAttrs(r) + ">" +
       (ui.calibrate ? calibBannerHTML() : "") +
       '<header class="line-head">' +
@@ -625,17 +688,19 @@
           '<p class="line-pct"><strong data-pct="' + r.id + '">' + pct(p) + '%</strong> <span data-count="line:' + r.id + '">' + p.done + " of " + p.total + " items</span></p>" +
           '<div class="meter" aria-hidden="true"><span data-bar="' + r.id + '" style="width:' + pct(p) + '%"></span></div>' +
           '<p class="line-pace" data-pace="' + r.id + '">' + esc(paceText(r)) + "</p>" +
+          (x.total ? '<p class="line-extra">Extras, not counted above: <span data-count="xline:' + r.id + '">' + x.done + " of " + x.total + "</span></p>" : "") +
           (isFocus ? '<p class="focus-flag">Your focus line</p>' : '<button type="button" class="btn" data-act="focus" data-line="' + r.id + '">Make this my focus</button>') +
         "</div>" +
       "</header>" +
       '<div class="toolbar">' +
+        (nu ? '<button type="button" class="btn btn-solid btn-sm" data-act="go-here">Go to my stop</button>' : "") +
         '<input type="search" class="filter" data-act="filter" placeholder="Filter topics and projects" aria-label="Filter topics and projects">' +
         '<label class="toggle"><input type="checkbox" data-act="hide-done"' + (ui.hideDone ? " checked" : "") + "> Hide finished</label>" +
         '<label class="toggle"><input type="checkbox" data-act="calibrate"' + (ui.calibrate ? " checked" : "") + "> Calibration mode</label>" +
-        '<span class="toolbar-btns"><button type="button" class="linkbtn" data-act="expand">Open all</button><button type="button" class="linkbtn" data-act="collapse">Close all</button></span>' +
+        '<span class="toolbar-btns"><button type="button" class="linkbtn" data-act="expand">Open all phases</button><button type="button" class="linkbtn" data-act="collapse">Close all</button></span>' +
       "</div>" +
       '<p class="filter-empty" hidden>Nothing on this line matches that filter.</p>' +
-      '<ol class="stations">' + r.phases.map((ph, i) => phaseHTML(r, ph, i, openSet)).join("") + "</ol>" +
+      '<ol class="stations">' + r.phases.map((ph, i) => phaseHTML(r, ph, i, openSet, hereId)).join("") + "</ol>" +
       "</div>";
   }
 
@@ -668,11 +733,11 @@
     lastViewKey = viewKey;
   }
 
-  function revealTarget(id) {
-    const el = document.getElementById("topic-" + id) || document.getElementById("project-" + id);
-    if (!el) return;
-    const details = el.closest("details");
-    if (details && !details.open) details.open = true;
+  function revealEl(el) {
+    const station = el.closest(".station");
+    const phase = station && station.querySelector("details");
+    if (phase && !phase.open) phase.open = true;
+    if (el.tagName === "DETAILS" && !el.open) el.open = true;
     requestAnimationFrame(() => {
       if (el.scrollIntoView) el.scrollIntoView({ behavior: reducedMotion() ? "auto" : "smooth", block: "start" });
       el.classList.add("flash");
@@ -680,25 +745,54 @@
     });
   }
 
+  function revealTarget(id) {
+    const el = document.getElementById("topic-" + id) || document.getElementById("project-" + id);
+    if (el) revealEl(el);
+  }
+
+  // Exactly one block on a line page is marked "You are here": the next unticked core stop.
+  function markHere() {
+    const rt = route();
+    if (rt.view !== "line") return null;
+    const nu = nextUp(rt.line);
+    const id = nu ? (nu.kind === "topic" ? "topic-" : "project-") + nu.id : "";
+    $$(".is-here", main).forEach((el) => { if (el.id !== id) el.classList.remove("is-here"); });
+    const el = id ? document.getElementById(id) : null;
+    if (el) el.classList.add("is-here");
+    return el;
+  }
+
+  function keysFor(kind, a, b) {
+    if (kind === "topic" && topicItems[a]) return topicItems[a].map((i) => i.key);
+    if (kind === "project" && projectItems[a]) return projectItems[a].map((i) => i.key);
+    const r = lineById[a];
+    if (!r) return [];
+    if (kind === "phase") return r.phases[+b]._keys;
+    if (kind === "xphase") return r.phases[+b]._extraKeys;
+    if (kind === "line") return r._keys;
+    if (kind === "xline") return r._extraKeys;
+    return [];
+  }
+
   function refreshCounts() {
     $$("[data-count]").forEach((el) => {
       const parts = el.getAttribute("data-count").split(":");
-      let keys = [];
-      if (parts[0] === "topic" && topicItems[parts[1]]) keys = topicItems[parts[1]].map((i) => i.key);
-      else if (parts[0] === "project" && projectItems[parts[1]]) keys = projectItems[parts[1]].map((i) => i.key);
-      else if (parts[0] === "phase" && lineById[parts[1]]) keys = lineById[parts[1]].phases[+parts[2]]._keys;
-      else if (parts[0] === "line" && lineById[parts[1]]) keys = lineById[parts[1]]._keys;
-      const p = progress(keys);
+      const p = progress(keysFor(parts[0], parts[1], parts[2]));
       if (parts[0] === "topic" || parts[0] === "project") {
         el.textContent = p.done + "/" + p.total;
         const block = el.closest(".topic, .project");
-        if (block) block.classList.toggle("is-done", p.done === p.total);
+        if (block) {
+          block.classList.toggle("is-done", p.done === p.total);
+          block.setAttribute("data-state", stateOf(p));
+        }
       } else if (parts[0] === "phase") {
         el.textContent = p.done + " of " + p.total;
         const st = el.closest(".station");
         if (st) st.setAttribute("data-state", phaseState(p));
-      } else {
+      } else if (parts[0] === "line") {
         el.textContent = p.done + " of " + p.total + " items";
+      } else {
+        el.textContent = p.done + " of " + p.total;
       }
     });
     $$("[data-pct]").forEach((el) => {
@@ -715,6 +809,7 @@
     });
     $$("li.item").forEach((li) => li.setAttribute("data-known", isKnown(li.getAttribute("data-key")) ? "1" : "0"));
     $$("input[data-key]").forEach((input) => { input.checked = isDone(input.getAttribute("data-key")); });
+    markHere();
   }
 
   function refreshNotes() {
@@ -765,7 +860,16 @@
       clearTimeout(todayTimer);
       todayTimer = setTimeout(render, done && !reducedMotion() ? 450 : 0);
     } else {
+      const before = $(".is-here", main);
       refreshCounts();
+      const after = $(".is-here", main);
+      if (done && before && after && before !== after && before.classList.contains("is-done")) {
+        before.open = false;
+        const station = after.closest(".station");
+        const phase = station && station.querySelector("details");
+        if (phase && !phase.open) phase.open = true;
+        after.open = true;
+      }
     }
   }
 
@@ -849,6 +953,11 @@
         toast(lineById[el.getAttribute("data-line")].title + " is now your focus line.");
         break;
       case "known-topic": markTopicKnown(el.getAttribute("data-topic")); break;
+      case "go-here": {
+        const here = markHere();
+        if (here) revealEl(here);
+        break;
+      }
       case "notes": {
         const block = el.closest(".topic, .project");
         const box = block && $(".notes", block);
@@ -948,9 +1057,9 @@
         "Progress is kept in one secret gist in your account, and each device merges changes item by item.</p>" +
         '<p class="settings-detail" id="sync-detail">' + syncDetailHTML() + "</p>" +
         (connected
-          ? '<div class="row"><button type="button" class="btn btn-solid" data-act="sync-now">Sync now</button><button type="button" class="btn" data-act="disconnect">Disconnect this device</button></div>'
+          ? '<div class="btn-row"><button type="button" class="btn btn-solid" data-act="sync-now">Sync now</button><button type="button" class="btn" data-act="disconnect">Disconnect this device</button></div>'
           : '<label class="field"><span>GitHub token</span><input type="password" id="gh-token" autocomplete="off" spellcheck="false" placeholder="ghp_..."></label>' +
-            '<div class="row"><button type="button" class="btn btn-solid" data-act="connect">Connect and sync</button>' +
+            '<div class="btn-row"><button type="button" class="btn btn-solid" data-act="connect">Connect and sync</button>' +
             '<a class="btn" href="https://github.com/settings/tokens/new?scopes=gist&amp;description=roadmaps-sync" target="_blank" rel="noopener noreferrer">Create a token</a></div>' +
             '<p class="settings-fine">The token is stored in this browser only and is sent only to api.github.com. Use a token limited to the gist scope.</p>') +
       "</section>" +
@@ -969,7 +1078,7 @@
       "</section>" +
 
       '<section class="settings-sec"><h3>Backup</h3>' +
-        '<div class="row"><button type="button" class="btn" data-act="export">Export progress</button>' +
+        '<div class="btn-row"><button type="button" class="btn" data-act="export">Export progress</button>' +
         '<label class="btn file-btn">Import progress<input type="file" accept="application/json,.json" data-act="import"></label></div>' +
         '<p class="settings-fine">Import merges with what is already here; newer entries win.</p>' +
       "</section>" +

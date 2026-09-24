@@ -2,14 +2,18 @@
 
 Four career roadmaps on one static site, each built from scratch with the best free resource for every topic, projects with clear "done when" criteria, and progress you can tick off from any device.
 
-| Line | Phases | Topics | Projects |
-|---|---|---|---|
-| Data Scientist (DS) | 12 | 53 | 11 |
-| ML Engineer (MLE) | 11 | 59 | 10 |
-| AI Engineer (AI) | 11 | 46 | 10 |
-| Forward Deployed Engineer (FDE) | 10 | 50 | 10 |
+| Line | Phases | Core topics | Extra topics | Projects | Core items |
+|---|---|---|---|---|---|
+| Data Scientist (DS) | 12 | 37 | 16 | 11 | 332 |
+| ML Engineer (MLE) | 11 | 50 | 9 | 10 | 411 |
+| AI Engineer (AI) | 11 | 38 | 8 | 10 | 322 |
+| Forward Deployed Engineer (FDE) | 10 | 46 | 4 | 10 | 362 |
 
-Across the four lines there are 111 topics and 41 projects, 956 checkable items in total. Topics live in one shared library, so 58 of them are interchanges used by two or more lines: tick an item once and it counts everywhere. Eleven topics (Python, Git, the shell, SQL, databases, Docker, LLM fundamentals and more) sit on all four lines.
+Every topic has one clear place to learn it. For 51 topics that is a Hindi YouTube source (CampusX, Krish Naik Hindi, Gate Smashers, TrainWithShubham, Chai aur Code and others) with a note on which videos to watch. For the rest it is the best free English course or book, since no Hindi source is good enough there yet. One "go deeper" link sits under each pick, and anything else is folded away.
+
+Each phase separates the core path from optional topics ("Extra, when you have time"). Progress, pace and the next stop only count the core path, and one topic on each line is marked "You are here".
+
+Topics live in one shared library, so 58 of them are interchanges used by two or more lines: tick an item once and it counts everywhere.
 
 No build step and no dependencies. It is plain HTML, CSS and JavaScript.
 
@@ -58,7 +62,8 @@ Security notes:
 ## How to use it without burning out
 
 - **Week one: calibrate.** Open each line, turn on calibration mode, and tick only what you can explain and implement without notes. Calibration ticks are stored as prior knowledge: they count toward progress but never toward streaks or the weekly goal, so the numbers stay honest.
-- **One focus line.** The Today page shows the next stop on your focus line: the next few unticked items and the resource to start with. You never have to decide what to study next.
+- **One focus line.** The Today page shows the next stop on your focus line: the next few unticked items and the video or course to start with. You never have to decide what to study next.
+- **Follow "You are here".** On a line page, only the current topic is open. Finish it and it folds away while the next one opens. "Go to my stop" jumps back to it. Leave the Extra topics for later; they never block the next stop.
 - **A weekly goal you can hit in a bad week.** Set it in Settings. Consistency beats intensity.
 - **Never miss twice.** One missed day is normal. The Today page nudges you after two.
 - **Notes.** Every topic and project has a notes box for repo links, write-ups, or what finally clicked. Notes sync too.
@@ -70,7 +75,8 @@ Keyboard: press `/` on a line page to jump to the filter box.
 Topics live in `data/topics/*.js` and roadmaps in `data/roadmaps/*.js`. The format is documented at the top of `data/topics/core.js` and `data/roadmaps/data-scientist.js`.
 
 - **Progress is keyed by item text.** Rewording an item resets that one tick. Reordering items, topics or phases is always safe. Renaming a topic id or project id resets its ticks, so keep ids stable.
-- **Add a topic:** add it to any topic file, then list its id in a phase of one or more roadmaps.
+- **Add a topic:** add it to any topic file, then list its id in a phase of one or more roadmaps, under `topics` for the core path or `extra` for optional.
+- **Hindi picks:** set `hi: ["Channel: playlist", "url", "which videos to watch"]` on a topic. Playlist links were verified when added. A few picks are YouTube searches pre-filled with the channel and topic, used where the exact playlist link could not be verified; replace them with the playlist URL once you find it.
 - **Add a roadmap** (for example Software Engineer or Full Stack): copy a roadmap file, change `id`, `code`, `title`, `color`, `colorDark` and `summary`, build the phases mostly from existing topic ids, then add one `<script>` line for the new file in `index.html`. Most of a software engineering or full-stack path already exists as topics (Python, DSA, OS, networking, databases, system design, web, TypeScript, React, APIs, testing, Docker, CI/CD).
 - **Check before pushing:** `node scripts/validate.mjs` loads the data exactly as the site does and reports unknown ids, duplicates, bad links and files that `index.html` forgets to load. If the data has a problem, the site itself also shows a notice at the top.
 

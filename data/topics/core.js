@@ -4,10 +4,14 @@
   Format of every topic:
     "topic-id": {
       title: "Shown as the topic heading",
+      hi:    ["Channel: playlist", "https://...", "which videos to watch"],  // optional Hindi pick
       subs:  ["Checkable item", ...],             // each item is ticked separately
-      res:   [["Label", "https://...", "kind"]],  // first one is the "start with" pick
+      res:   [["Label", "https://...", "kind"]],  // English resources, best course first
       tip:   "How to study it (optional)"
     }
+
+  The site shows ONE pick per topic: the Hindi source if "hi" is set, otherwise res[0].
+  The next resource is offered as "go deeper"; the rest are folded under "More resources".
 
   Topic ids are shared by every roadmap: tick an item once and it counts on every line.
   Editing an item's text resets that one tick, because progress is keyed by the text.
@@ -85,6 +89,7 @@ RM.addTopics({
 
   "py-core": {
     title: "Python core language",
+    hi: ["CampusX: 100 Days of Python", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvb1RYR-iTA_hzckhdONtSW4", "Shuru se chalo; jo pehle se aata hai use 2x speed pe nikaal do"],
     subs: [
       "Types, operators, control flow, functions and scope",
       "Lists, dicts, sets, tuples and comprehensions",
@@ -128,6 +133,7 @@ RM.addTopics({
 
   "cli-linux": {
     title: "Command line, shell and Linux",
+    hi: ["TrainWithShubham: Linux one shot", "https://www.youtube.com/results?search_query=trainwithshubham+linux+one+shot", "Video ke saath-saath har command khud terminal mein chalao"],
     subs: [
       "Filesystem navigation, permissions and ownership",
       "Processes and signals: top, htop, kill, background jobs",
@@ -147,6 +153,7 @@ RM.addTopics({
 
   "git": {
     title: "Git and GitHub",
+    hi: ["Apna College: Git and GitHub", "https://www.youtube.com/results?search_query=apna+college+git+and+github+complete+tutorial", "Ek video mein basics se pull request tak; phir Learn Git Branching khelo"],
     subs: [
       "Commits, the staging area, history and diffs",
       "Branches, merge vs rebase, resolving conflicts",
@@ -166,6 +173,7 @@ RM.addTopics({
 
   "dsa": {
     title: "Data structures and algorithms",
+    hi: ["Aditya Verma: DP, recursion and patterns", "https://www.youtube.com/results?search_query=aditya+verma+dynamic+programming+playlist", "DP aur recursion ke liye best Hindi source; baaki patterns NeetCode se"],
     subs: [
       "Big-O time and space analysis",
       "Arrays, strings, hashing, two pointers, sliding window",
@@ -188,6 +196,7 @@ RM.addTopics({
 
   "os": {
     title: "Operating systems essentials",
+    hi: ["Gate Smashers: Operating System", "https://www.youtube.com/results?search_query=gate+smashers+operating+system+full+playlist", "Process, threads, scheduling, deadlock aur memory wale videos kaafi hain"],
     subs: [
       "Processes vs threads, context switching, scheduling",
       "Memory: stack vs heap, virtual memory, paging",
@@ -204,6 +213,7 @@ RM.addTopics({
 
   "networking": {
     title: "Networking and the web, under the hood",
+    hi: ["Gate Smashers: Computer Networks", "https://www.youtube.com/playlist?list=PLxCzCOWd7aiGFBD2-2joCpWOLUrDLvVV_", "TCP/IP, DNS aur HTTP wale videos pe focus; exam-level detail skip kar sakte ho"],
     subs: [
       "The TCP/IP model, ports, TCP vs UDP",
       "DNS resolution end to end",
@@ -223,6 +233,7 @@ RM.addTopics({
 
   "db-fundamentals": {
     title: "Database fundamentals",
+    hi: ["Gate Smashers: DBMS", "https://www.youtube.com/results?search_query=gate+smashers+dbms+full+playlist", "Keys, normalization, transactions aur indexing wale videos"],
     subs: [
       "Relational model, keys, constraints, normalization up to 3NF",
       "Indexes: B-trees, composite indexes, when an index is ignored",
@@ -241,6 +252,7 @@ RM.addTopics({
 
   "sw-design": {
     title: "Software design and clean code",
+    hi: ["Concept && Coding: Low Level Design", "https://www.youtube.com/results?search_query=concept+and+coding+low+level+design+playlist", "SOLID aur design patterns wale videos pehle"],
     subs: [
       "Separation of concerns, cohesion and coupling",
       "SOLID used pragmatically; composition over inheritance",

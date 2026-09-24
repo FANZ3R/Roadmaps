@@ -2,6 +2,7 @@
 RM.addTopics({
   "dl-foundations": {
     title: "Neural network foundations",
+    hi: ["CampusX: 100 Days of Deep Learning", "https://www.youtube.com/playlist?list=PLKnIA16_RmvYuZauWaPlRTC54KxSNLtNn", "Perceptron se backprop, optimizers aur regularization tak"],
     subs: [
       "Perceptrons, MLPs and the universal approximation intuition",
       "Activation functions: sigmoid, tanh, ReLU, GELU",
@@ -25,6 +26,7 @@ RM.addTopics({
 
   "pytorch": {
     title: "PyTorch",
+    hi: ["CampusX: Practical Deep Learning using PyTorch", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvboy8bmDCjwNHgTaYH2puK7", "Tensors, autograd aur training pipeline se shuru; poora playlist practical hai"],
     subs: [
       "Tensors, devices and dtypes",
       "Autograd and requires_grad",
@@ -45,6 +47,7 @@ RM.addTopics({
 
   "dl-practical": {
     title: "Practical deep learning and training recipes",
+    hi: ["CampusX: 100 Days of Deep Learning", "https://www.youtube.com/playlist?list=PLKnIA16_RmvYuZauWaPlRTC54KxSNLtNn", "Regularization, dropout, batch norm aur hyperparameter tuning wale videos"],
     subs: [
       "Transfer learning and fine-tuning pretrained models",
       "Overfit one batch first, then scale up",
@@ -64,6 +67,7 @@ RM.addTopics({
 
   "cnn-cv": {
     title: "CNNs and computer vision",
+    hi: ["CampusX: 100 Days of Deep Learning", "https://www.youtube.com/playlist?list=PLKnIA16_RmvYuZauWaPlRTC54KxSNLtNn", "CNN section: convolution, pooling, architectures aur transfer learning"],
     subs: [
       "Convolutions, padding, stride, pooling, receptive fields",
       "Classic architectures: LeNet, VGG, ResNet",
@@ -83,6 +87,7 @@ RM.addTopics({
 
   "seq-models": {
     title: "Sequence models",
+    hi: ["CampusX: 100 Days of Deep Learning", "https://www.youtube.com/playlist?list=PLKnIA16_RmvYuZauWaPlRTC54KxSNLtNn", "RNN, LSTM aur GRU section"],
     subs: [
       "Recurrent networks and backprop through time",
       "Vanishing gradients; LSTM and GRU",
@@ -99,6 +104,7 @@ RM.addTopics({
 
   "transformers": {
     title: "Transformers, deeply",
+    hi: ["CampusX: 100 Days of Deep Learning", "https://www.youtube.com/playlist?list=PLKnIA16_RmvYuZauWaPlRTC54KxSNLtNn", "Attention, self-attention aur transformer architecture wala last section"],
     subs: [
       "Self-attention: queries, keys, values, scaled dot product",
       "Multi-head attention",
@@ -128,8 +134,8 @@ RM.addTopics({
       "Evaluating generative models"
     ],
     res: [
-      ["What are Diffusion Models? (Lilian Weng)", "https://lilianweng.github.io/posts/2021-07-11-diffusion-models/", "article"],
       ["Hugging Face Diffusion Models Class", "https://github.com/huggingface/diffusion-models-class", "course"],
+      ["What are Diffusion Models? (Lilian Weng)", "https://lilianweng.github.io/posts/2021-07-11-diffusion-models/", "article"],
       ["Understanding Deep Learning: generative model chapters", "https://udlbook.github.io/udlbook/", "book"]
     ],
     tip: "Diffusion ka math bhaari lagta hai. Pehle HF class ka code chalao, phir Lilian Weng ka post padho, dono milke clear hoga."
@@ -183,8 +189,8 @@ RM.addTopics({
       "Batching strategies and latency percentiles"
     ],
     res: [
-      ["A Visual Guide to Quantization (Maarten Grootendorst)", "https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-quantization", "article"],
       ["TinyML and Efficient Deep Learning (MIT 6.5940)", "https://efficientml.ai/", "course"],
+      ["A Visual Guide to Quantization (Maarten Grootendorst)", "https://newsletter.maartengrootendorst.com/p/a-visual-guide-to-quantization", "article"],
       ["Hugging Face Optimum", "https://huggingface.co/docs/optimum/index", "docs"]
     ],
     tip: "Har optimization ke saath do number do: speed kitni badhi, quality kitni giri. Bina quality check ke quantization aadha kaam hai."

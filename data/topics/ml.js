@@ -2,6 +2,7 @@
 RM.addTopics({
   "ml-foundations": {
     title: "Machine learning foundations",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "Shuru ke intro videos (ML types, lifecycle), phir bias-variance aur regularization"],
     subs: [
       "Supervised, unsupervised, self-supervised and reinforcement learning",
       "Train, validation and test splits",
@@ -22,6 +23,7 @@ RM.addTopics({
 
   "ml-algorithms": {
     title: "Core supervised learning algorithms",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "Regression, logistic regression, decision trees, ensembles aur boosting wale videos"],
     subs: [
       "Linear and logistic regression",
       "k-nearest neighbours and the curse of dimensionality",
@@ -43,6 +45,7 @@ RM.addTopics({
 
   "ml-from-scratch": {
     title: "Implement ML from scratch (NumPy only)",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "Jin videos mein gradient descent aur regression from scratch code hote hain"],
     subs: [
       "Linear regression: normal equation and gradient descent",
       "Logistic regression with cross-entropy loss",
@@ -61,6 +64,7 @@ RM.addTopics({
 
   "sklearn": {
     title: "scikit-learn in practice",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "ColumnTransformer, Pipelines aur FunctionTransformer wale videos"],
     subs: [
       "The estimator API: fit, predict, transform",
       "Pipelines and ColumnTransformer",
@@ -78,6 +82,7 @@ RM.addTopics({
 
   "feature-eng": {
     title: "Feature engineering",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "Day 23 ke baad ka poora feature engineering section"],
     subs: [
       "Scaling and normalization: when it matters and when it does not",
       "Encoding categoricals: one-hot, ordinal, target encoding",
@@ -98,6 +103,7 @@ RM.addTopics({
 
   "model-eval": {
     title: "Model evaluation and selection",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "Regression aur classification metrics wale videos; CV ke liye scikit-learn docs"],
     subs: [
       "Cross-validation: k-fold, stratified, group, time series splits",
       "Classification metrics: precision, recall, F1, confusion matrix",
@@ -120,6 +126,7 @@ RM.addTopics({
 
   "unsupervised": {
     title: "Unsupervised learning",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "PCA aur clustering wale videos"],
     subs: [
       "k-means and choosing k",
       "Hierarchical clustering",
@@ -194,6 +201,7 @@ RM.addTopics({
 
   "nlp-classical": {
     title: "NLP foundations",
+    hi: ["CampusX: Natural Language Processing", "https://www.youtube.com/playlist?list=PLKnIA16_RmvZo7fp5kkIth6nRTeQQsjfX", "Chhota playlist; Word2Vec aur text classification pe khaas dhyan"],
     subs: [
       "Text preprocessing and tokenization",
       "Bag of words, n-grams and TF-IDF",

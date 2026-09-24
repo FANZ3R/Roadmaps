@@ -45,6 +45,7 @@ RM.addTopics({
 
   "probability": {
     title: "Probability",
+    hi: ["Krish Naik Hindi: Statistics for Data Science", "https://www.youtube.com/playlist?list=PLTDARY42LDV6YHSRo669_uDDGmUEmQnDJ", "Probability aur distributions wale videos; depth chahiye to Stat 110"],
     subs: [
       "Sample spaces, events, counting, conditional probability",
       "Independence and Bayes' theorem",
@@ -67,6 +68,7 @@ RM.addTopics({
 
   "stats-descriptive": {
     title: "Descriptive statistics and statistical thinking",
+    hi: ["Krish Naik Hindi: Statistics for Data Science", "https://www.youtube.com/playlist?list=PLTDARY42LDV6YHSRo669_uDDGmUEmQnDJ", "Shuru ke descriptive statistics wale videos"],
     subs: [
       "Mean, median, mode, variance, standard deviation, quantiles",
       "Shapes of distributions: skew, heavy tails, outliers",
@@ -85,6 +87,7 @@ RM.addTopics({
 
   "stats-inference": {
     title: "Statistical inference and hypothesis testing",
+    hi: ["Krish Naik Hindi: Statistics for Data Science", "https://www.youtube.com/playlist?list=PLTDARY42LDV6YHSRo669_uDDGmUEmQnDJ", "Hypothesis testing, p-value aur confidence interval wale videos"],
     subs: [
       "Sampling distributions and standard error",
       "Confidence intervals: building them and reading them correctly",
@@ -105,6 +108,7 @@ RM.addTopics({
 
   "regression-analysis": {
     title: "Regression analysis (the statistical view)",
+    hi: ["CampusX: 100 Days of Machine Learning", "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH", "Linear regression, regression metrics aur regularization wale videos"],
     subs: [
       "Ordinary least squares and its assumptions",
       "Interpreting coefficients, standard errors and intervals",

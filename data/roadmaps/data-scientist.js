@@ -2,9 +2,11 @@
   Roadmap format:
     RM.addRoadmap({
       id, code, title, color, colorDark, summary,
-      phases: [{ title, note, topics: ["topic-id", ...], projects: [{ id, title, brief, done: ["criterion", ...] }] }]
+      phases: [{ title, note, topics: ["topic-id", ...], extra: ["topic-id", ...], projects: [{ id, title, brief, done: [...] }] }]
     });
   Topic ids come from data/topics/*.js. Project ids must be unique across all roadmaps.
+  "topics" and projects are the core path: they drive progress, pace and the next stop.
+  "extra" topics are optional and shown under "Extra, when you have time".
 */
 RM.addRoadmap({
   id: "data-scientist",
@@ -56,7 +58,8 @@ RM.addRoadmap({
     {
       title: "Statistics",
       note: "Ye phase DS ki reedh ki haddi hai. Formula yaad karne se zyada simulation se khud prove karo. Interview mein confidence yahin se aata hai.",
-      topics: ["stats-descriptive", "stats-inference", "regression-analysis", "bayesian"],
+      topics: ["stats-descriptive", "stats-inference", "regression-analysis"],
+      extra: ["bayesian"],
       projects: [{
         id: "ds-stats-by-simulation",
         title: "Statistics by simulation",
@@ -73,7 +76,8 @@ RM.addRoadmap({
     {
       title: "Data wrangling and SQL",
       note: "SQL roz practice karo, 2 se 3 questions. Same sawaal pandas aur SQL dono mein solve karke dekho, dono ki soch pakki hogi.",
-      topics: ["numpy", "pandas", "data-collection", "sql-fundamentals", "sql-advanced", "db-fundamentals"],
+      topics: ["numpy", "pandas", "sql-fundamentals", "sql-advanced"],
+      extra: ["data-collection", "db-fundamentals"],
       projects: [{
         id: "ds-analytics-sql",
         title: "Analytics SQL portfolio",
@@ -90,7 +94,8 @@ RM.addRoadmap({
     {
       title: "Analysis, visualization and communication",
       note: "Analysis tab tak adhoori hai jab tak kisi ne us par decision na liya. Har chart ek sawaal ka jawaab de, aur har memo pehli line mein jawaab de.",
-      topics: ["eda", "dataviz", "storytelling", "bi-dashboards"],
+      topics: ["eda", "dataviz", "storytelling"],
+      extra: ["bi-dashboards"],
       projects: [{
         id: "ds-analysis-decision",
         title: "An analysis that leads to a decision",
@@ -107,7 +112,8 @@ RM.addRoadmap({
     {
       title: "Machine learning core",
       note: "Model banana aasaan hai, sahi evaluate karna mushkil. Baseline, leakage-free cross-validation aur error analysis pe zyada time do, naye algorithms pe kam.",
-      topics: ["ml-foundations", "ml-algorithms", "ml-from-scratch", "sklearn", "feature-eng", "model-eval", "unsupervised", "interpretability"],
+      topics: ["ml-foundations", "ml-algorithms", "sklearn", "feature-eng", "model-eval", "unsupervised"],
+      extra: ["ml-from-scratch", "interpretability"],
       projects: [{
         id: "ds-tabular-ml",
         title: "Tabular ML, done properly",
@@ -142,7 +148,8 @@ RM.addRoadmap({
     {
       title: "Specialized modeling",
       note: "Sab kuch ek saath nahi. Jo tumhare domain aur target jobs mein chahiye, uspe pehle depth lo; baaki ki basic samajh kaafi hai.",
-      topics: ["timeseries", "nlp-classical", "optimization-or", "recsys"],
+      topics: ["timeseries"],
+      extra: ["nlp-classical", "optimization-or", "recsys"],
       projects: [{
         id: "ds-forecast-or-optimize",
         title: "Forecast or optimize",
@@ -158,7 +165,8 @@ RM.addRoadmap({
     {
       title: "Deep learning and LLM literacy",
       note: "Aaj ke DS ko LLMs ka practical use aana chahiye. Par hamesha baseline se compare karo, hype se nahi.",
-      topics: ["dl-foundations", "pytorch", "transformers", "llm-fundamentals", "llm-apis"],
+      topics: ["dl-foundations", "llm-fundamentals", "llm-apis"],
+      extra: ["pytorch", "transformers"],
       projects: [{
         id: "ds-text-classic-vs-modern",
         title: "Text classification: classic vs modern",
@@ -174,7 +182,8 @@ RM.addRoadmap({
     {
       title: "Data at scale and production",
       note: "Model production tak na pahunche to value zero hai. Deployment ka basic khud karna aana chahiye; poora MLOps expert banna zaroori nahi.",
-      topics: ["data-warehousing", "spark", "py-advanced", "apis-backend", "docker", "mlops-lifecycle", "data-ethics"],
+      topics: ["apis-backend", "docker", "mlops-lifecycle"],
+      extra: ["data-warehousing", "spark", "py-advanced", "data-ethics"],
       projects: [{
         id: "ds-ship-a-model",
         title: "Ship a model",
@@ -191,7 +200,8 @@ RM.addRoadmap({
     {
       title: "Interviews and portfolio",
       note: "Ab tak ka sab kuch ek kahani mein jodo. Interview mein yahi projects tumhari taraf se baat karenge.",
-      topics: ["interview-ds", "interview-behavioral", "portfolio", "dsa"],
+      topics: ["interview-ds", "interview-behavioral", "portfolio"],
+      extra: ["dsa"],
       projects: [{
         id: "ds-capstone",
         title: "Capstone: a decision from data, end to end",

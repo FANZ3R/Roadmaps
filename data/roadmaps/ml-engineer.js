@@ -32,7 +32,8 @@ RM.addRoadmap({
     {
       title: "CS fundamentals and DSA",
       note: "DSA roz thoda thoda, ek saath bahut nahi. OS aur networking clear hoga to production bugs samajhna aasaan ho jaayega.",
-      topics: ["dsa", "os", "networking", "db-fundamentals"],
+      topics: ["dsa", "os", "db-fundamentals"],
+      extra: ["networking"],
       projects: [{
         id: "mle-kv-store",
         title: "Mini key-value store",
@@ -49,7 +50,8 @@ RM.addRoadmap({
     {
       title: "Math for ML",
       note: "Linear algebra aur calculus utna hi jitna backprop aur optimizers derive karne ke liye chahiye. Probability ko loss functions se jod ke samjho.",
-      topics: ["linalg", "calculus", "probability", "stats-inference"],
+      topics: ["linalg", "calculus", "probability"],
+      extra: ["stats-inference"],
       projects: [{
         id: "mle-optimizers",
         title: "Optimizers from scratch",
@@ -65,7 +67,8 @@ RM.addRoadmap({
     {
       title: "Classical machine learning",
       note: "Har algorithm ko teen level pe jaano: intuition, math, aur code. Interviews mein breadth yahin se aati hai.",
-      topics: ["ml-foundations", "ml-algorithms", "ml-from-scratch", "sklearn", "feature-eng", "model-eval", "unsupervised", "ml-theory"],
+      topics: ["ml-foundations", "ml-algorithms", "ml-from-scratch", "sklearn", "feature-eng", "model-eval", "unsupervised"],
+      extra: ["ml-theory"],
       projects: [{
         id: "mle-ml-library",
         title: "Your own mini scikit-learn",
@@ -81,7 +84,8 @@ RM.addRoadmap({
     {
       title: "Deep learning",
       note: "Karpathy ke saath code likho, aur ek clean training setup banao jise har project mein reuse karo.",
-      topics: ["dl-foundations", "pytorch", "dl-practical", "cnn-cv", "seq-models", "transformers"],
+      topics: ["dl-foundations", "pytorch", "dl-practical", "cnn-cv", "transformers"],
+      extra: ["seq-models"],
       projects: [{
         id: "mle-training-framework",
         title: "A training setup you would trust at work",
@@ -98,7 +102,8 @@ RM.addRoadmap({
     {
       title: "Modern models: LLMs and beyond",
       note: "Ek model khud train karo aur ek existing model ko adapt karo. Dono karne ke baad LLMs magic nahi lagenge.",
-      topics: ["llm-fundamentals", "llm-from-scratch", "fine-tuning", "generative-models", "recsys"],
+      topics: ["llm-fundamentals", "llm-from-scratch", "fine-tuning", "recsys"],
+      extra: ["generative-models"],
       projects: [{
         id: "mle-pretrain-finetune",
         title: "Pretrain small, fine-tune big",
@@ -131,7 +136,8 @@ RM.addRoadmap({
     {
       title: "MLOps and deployment",
       note: "Yahi phase MLE ko DS se alag karta hai. Har cheez automate karo: training, deployment, monitoring.",
-      topics: ["docker", "kubernetes", "cloud-fundamentals", "iac", "cicd", "mlops-lifecycle", "model-serving", "ml-monitoring", "experimentation"],
+      topics: ["docker", "kubernetes", "cloud-fundamentals", "cicd", "mlops-lifecycle", "model-serving", "ml-monitoring"],
+      extra: ["iac", "experimentation"],
       projects: [{
         id: "mle-mini-platform",
         title: "Mini ML platform",
@@ -149,7 +155,8 @@ RM.addRoadmap({
     {
       title: "Performance and scale",
       note: "Har optimization ko number se prove karo: latency, throughput, cost, quality. 'Fast lag raha hai' koi metric nahi.",
-      topics: ["gpu-performance", "distributed-training", "efficient-inference", "llm-inference"],
+      topics: ["efficient-inference", "llm-inference"],
+      extra: ["gpu-performance", "distributed-training"],
       projects: [{
         id: "mle-fast-and-cheap",
         title: "Make it fast and cheap",

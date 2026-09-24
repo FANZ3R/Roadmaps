@@ -23,6 +23,7 @@ RM.addTopics({
 
   "llm-apis": {
     title: "Building with LLM APIs",
+    hi: ["CampusX: Generative AI using LangChain", "https://www.youtube.com/playlist?list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0", "Models, structured output aur tool calling wale videos"],
     subs: [
       "Chat message format and system prompts",
       "Streaming responses",
@@ -44,6 +45,7 @@ RM.addTopics({
 
   "prompting": {
     title: "Prompt and context engineering",
+    hi: ["CampusX: Generative AI using LangChain", "https://www.youtube.com/playlist?list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0", "Prompts wala video; practice ke liye Anthropic ka tutorial"],
     subs: [
       "Clear, specific instructions with success criteria",
       "Few-shot examples, and their pitfalls",
@@ -64,6 +66,7 @@ RM.addTopics({
 
   "embeddings-vectordb": {
     title: "Embeddings and vector search",
+    hi: ["CampusX: Generative AI using LangChain", "https://www.youtube.com/playlist?list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0", "Embeddings, vector stores aur retrievers wale videos"],
     subs: [
       "What embeddings capture; bi-encoders vs cross-encoders",
       "Similarity: cosine, dot product, L2",
@@ -84,6 +87,7 @@ RM.addTopics({
 
   "rag": {
     title: "Retrieval-augmented generation",
+    hi: ["CampusX: Generative AI using LangChain", "https://www.youtube.com/playlist?list=PLKnIA16_RmvaTbihpo4MtzVm4XOQa0ER0", "Document loaders se RAG project tak ka section"],
     subs: [
       "Ingestion: parsing PDFs, HTML and tables",
       "Chunking strategies and chunk metadata",
@@ -128,6 +132,7 @@ RM.addTopics({
 
   "agents": {
     title: "Agents and tool use",
+    hi: ["CampusX: Agentic AI using LangGraph", "https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL", "Workflows (sequential, parallel, conditional, iterative) aur tools wale videos"],
     subs: [
       "The augmented LLM: retrieval, tools, memory",
       "Workflows: prompt chaining, routing, parallelization",
@@ -150,6 +155,7 @@ RM.addTopics({
 
   "agent-frameworks": {
     title: "Agent frameworks and orchestration",
+    hi: ["CampusX: Agentic AI using LangGraph", "https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL", "Persistence, streaming aur LangSmith observability wale videos"],
     subs: [
       "Build an agent loop with no framework first",
       "LangGraph: state, nodes, edges, checkpointing",
@@ -168,6 +174,7 @@ RM.addTopics({
 
   "mcp": {
     title: "Model Context Protocol",
+    hi: ["CampusX: Model Context Protocol", "https://www.youtube.com/playlist?list=PLKnIA16_Rmva_oZ9F4ayUu9qcWgF7Fyc0", "Chhoti mini series: why, architecture, lifecycle"],
     subs: [
       "Architecture: hosts, clients and servers",
       "Primitives: tools, resources and prompts",
@@ -217,9 +224,9 @@ RM.addTopics({
       "GPU sizing and cost per million tokens"
     ],
     res: [
-      ["vLLM documentation", "https://docs.vllm.ai/", "docs"],
       ["Mastering LLM Techniques: Inference Optimization (NVIDIA)", "https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/", "article"],
-      ["Transformer Inference Arithmetic (kipply)", "https://kipp.ly/transformer-inference-arithmetic/", "article"]
+      ["Transformer Inference Arithmetic (kipply)", "https://kipp.ly/transformer-inference-arithmetic/", "article"],
+      ["vLLM documentation", "https://docs.vllm.ai/", "docs"]
     ],
     tip: "KV cache ki memory ka formula khud nikaalo aur apne model pe lagao. Ye ek calculation GPU sizing ke saare sawaal solve kar deti hai."
   },
@@ -236,8 +243,8 @@ RM.addTopics({
     ],
     res: [
       ["Let's reproduce GPT-2 (124M) (Karpathy)", "https://www.youtube.com/watch?v=l8pRSuU81PU", "video"],
-      ["LLMs-from-scratch code (Sebastian Raschka)", "https://github.com/rasbt/LLMs-from-scratch", "repo"],
       ["Stanford CS336: Language Modeling from Scratch", "https://cs336.stanford.edu/", "course"],
+      ["LLMs-from-scratch code (Sebastian Raschka)", "https://github.com/rasbt/LLMs-from-scratch", "repo"],
       ["nanochat (Karpathy)", "https://github.com/karpathy/nanochat", "repo"]
     ],
     tip: "Ye depth wala topic hai, jaldi nahi. Ek baar GPT-2 khud train kar liya to LLMs ke baare mein kisi bhi interview mein confidence alag level ka hoga."
@@ -302,6 +309,7 @@ RM.addTopics({
 
   "ai-app-frontend": {
     title: "Frontends for AI apps",
+    hi: ["CampusX: Agentic AI using LangGraph", "https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL", "Streamlit se chatbot UI banane wale videos"],
     subs: [
       "Rapid prototypes with Streamlit or Gradio",
       "Streaming tokens to the browser with Server-Sent Events",

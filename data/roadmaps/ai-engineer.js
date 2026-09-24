@@ -32,7 +32,8 @@ RM.addRoadmap({
     {
       title: "Backend, data and the web",
       note: "Har AI feature ke peeche ek normal backend hota hai. FastAPI, Postgres aur thoda frontend aana hi chahiye.",
-      topics: ["apis-backend", "db-fundamentals", "sql-fundamentals", "networking", "web-fundamentals"],
+      topics: ["apis-backend", "db-fundamentals", "sql-fundamentals"],
+      extra: ["networking", "web-fundamentals"],
       projects: [{
         id: "ai-backend-service",
         title: "Backend service in the cloud",
@@ -49,7 +50,8 @@ RM.addRoadmap({
     {
       title: "ML and deep learning essentials",
       note: "Model train nahi karna, par samajhna zaroori hai. Attention aur evaluation clear ho to LLM ka behaviour predict kar paoge.",
-      topics: ["linalg", "probability", "ml-foundations", "model-eval", "dl-foundations", "pytorch", "transformers", "nlp-classical"],
+      topics: ["ml-foundations", "model-eval", "dl-foundations", "pytorch", "transformers"],
+      extra: ["linalg", "probability", "nlp-classical"],
       projects: [{
         id: "ai-attention-understood",
         title: "Attention, understood",
@@ -132,7 +134,8 @@ RM.addRoadmap({
     {
       title: "Customizing and multimodal models",
       note: "Fine-tuning tab karo jab eval set bole ki zaroorat hai. Multimodal ka sabse practical use document extraction hai.",
-      topics: ["fine-tuning", "multimodal", "llm-from-scratch"],
+      topics: ["fine-tuning"],
+      extra: ["multimodal", "llm-from-scratch"],
       projects: [{
         id: "ai-finetune-vs-prompt",
         title: "Fine-tune to beat the prompt",
@@ -148,7 +151,8 @@ RM.addRoadmap({
     {
       title: "Production AI",
       note: "Demo aur production mein fark: security, cost, latency aur failure handling. Is phase mein apna ek purana project production-grade banao.",
-      topics: ["llm-inference", "docker", "cloud-fundamentals", "cicd", "ai-security", "ai-app-frontend", "system-design"],
+      topics: ["llm-inference", "docker", "cicd", "ai-security", "ai-app-frontend", "system-design"],
+      extra: ["cloud-fundamentals"],
       projects: [{
         id: "ai-production-hardening",
         title: "Production hardening",
